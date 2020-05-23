@@ -30,10 +30,24 @@
                     <view key="view" contentMode="scaleToFill" id="E7I-3H-WKP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="SFL-zc-3gt">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="SFL-zc-3gt" firstAttribute="leading" secondItem="zPH-5l-5wd" secondAttribute="leading" id="31q-dW-K5n"/>
+                            <constraint firstItem="SFL-zc-3gt" firstAttribute="trailing" secondItem="zPH-5l-5wd" secondAttribute="trailing" id="Bvz-iN-8Jv"/>
+                            <constraint firstItem="SFL-zc-3gt" firstAttribute="bottom" secondItem="zPH-5l-5wd" secondAttribute="bottom" id="XtL-EF-tcA"/>
+                            <constraint firstItem="SFL-zc-3gt" firstAttribute="top" secondItem="zPH-5l-5wd" secondAttribute="top" id="rkW-rM-sgp"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="zPH-5l-5wd"/>
                     </view>
                     <navigationItem key="navigationItem" title="Travel Locations" id="bEL-SO-fNj"/>
+                    <connections>
+                        <outlet property="mapView" destination="SFL-zc-3gt" id="qQ5-Lf-IbD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G3n-EX-hbh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
