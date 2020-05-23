@@ -15,6 +15,9 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Other Variables
     var annotations = [MKAnnotation]()
+    // Below are default center coordinate and camera height, if none stored
+    var centerCoordinate = CLLocationCoordinate2DMake(38.9717, -95.2353) // Lawrence, KS!
+    var cameraHeight = 15000000
     
     // MARK: View Functions
     override func viewDidLoad() {
@@ -23,6 +26,9 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         addLongPressGesture()
         
         // TODO: Load the user's last location & zoom level
+        self.mapView.camera.altitude = CLLocationDistance(cameraHeight)
+        self.mapView.centerCoordinate = centerCoordinate
+        
         // TODO: Load in any stored annotations/pins
         
         // Add any annotations to the map
