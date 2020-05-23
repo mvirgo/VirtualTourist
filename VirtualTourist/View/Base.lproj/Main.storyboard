@@ -47,6 +47,7 @@
                     <navigationItem key="navigationItem" title="Travel Locations" id="bEL-SO-fNj"/>
                     <connections>
                         <outlet property="mapView" destination="SFL-zc-3gt" id="qQ5-Lf-IbD"/>
+                        <segue destination="bk7-95-4C3" kind="show" identifier="showLocationPhotos" id="WHz-iR-dAp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G3n-EX-hbh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

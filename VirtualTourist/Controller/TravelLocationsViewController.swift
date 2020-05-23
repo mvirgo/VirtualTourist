@@ -48,6 +48,12 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         annotations.append(annotation)
         self.mapView.addAnnotation(annotation)
     }
+    
+    // Show the location's photos, if selected.
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        // TODO: Add handling of which location was selected
+        performSegue(withIdentifier: "showLocationPhotos", sender: nil)
+    }
 
 }
 
