@@ -8,16 +8,18 @@
 
 import MapKit
 import UIKit
+import CoreData
 
 class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     // MARK: IBOutlets
     @IBOutlet weak var mapView: MKMapView!
     
     // MARK: Other Variables
+    var dataController: DataController!
     var annotations = [MKAnnotation]()
     // Below are default center coordinate and camera height, if none stored
-    var centerCoordinate = CLLocationCoordinate2DMake(38.9717, -95.2353) // Lawrence, KS!
-    var cameraHeight = 15000000
+    var centerCoordinate: CLLocationCoordinate2D!
+    var cameraHeight: Int32!
     
     // MARK: View Functions
     override func viewDidLoad() {
@@ -25,7 +27,9 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         addLongPressGesture()
         
-        // TODO: Load the user's last location & zoom level
+        // Load the user's last location & zoom level
+        loadLastMapPosition()
+        // Set the map view's zoom level (altitude) and center coordinate
         self.mapView.camera.altitude = CLLocationDistance(cameraHeight)
         self.mapView.centerCoordinate = centerCoordinate
         
@@ -33,6 +37,11 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         
         // Add any annotations to the map
         self.mapView.addAnnotations(annotations)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        saveLastMapPosition()
     }
     
     // MARK: Map View Functions
@@ -59,6 +68,29 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         // TODO: Add handling of which location was selected
         performSegue(withIdentifier: "showLocationPhotos", sender: nil)
+    }
+    
+    // MARK: Other Functions
+    func loadLastMapPosition() {
+        // Try to get back the user's last map position
+        var mapData = DataHelper.fetchData(dataController, "Map")
+        // If it's empty, create the entity
+        if mapData.count == 0 {
+            let newMap = Map(context: dataController.viewContext)
+            DataHelper.saveData(dataController)
+            mapData = [newMap]
+        }
+        // Extract the center coordinate and camera height
+        let loadedMapPosition = mapData[0] as! Map
+        let lastLatitude = loadedMapPosition.centerLatitude
+        let lastLongitude = loadedMapPosition.centerLongitude
+        centerCoordinate = CLLocationCoordinate2DMake(lastLatitude, lastLongitude)
+        cameraHeight = loadedMapPosition.cameraHeight
+    }
+    
+    func saveLastMapPosition() {
+        // TODO: Save the user's last map position
+        DataHelper.saveData(dataController)
     }
 
 }

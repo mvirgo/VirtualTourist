@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Map" representedClassName="Map" syncable="YES" codeGenerationType="class">
+        <attribute name="cameraHeight" optional="YES" attributeType="Integer 32" defaultValueString="15000000" usesScalarValueType="YES"/>
+        <attribute name="centerLatitude" optional="YES" attributeType="Double" defaultValueString="38.9717" usesScalarValueType="YES"/>
+        <attribute name="centerLongitude" optional="YES" attributeType="Double" defaultValueString="-95.2353" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Photo" representedClassName="Photo" syncable="YES" codeGenerationType="class">
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <relationship name="pin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pin"/>
+    </entity>
+    <entity name="Pin" representedClassName="Pin" syncable="YES" codeGenerationType="class">
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo"/>
+    </entity>
+    <elements>
+        <element name="Map" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="Photo" positionX="177.7890625" positionY="3.41796875" width="128" height="73"/>
+        <element name="Pin" positionX="74.1171875" positionY="-158.63671875" width="128" height="88"/>
+    </elements>
 </model>
