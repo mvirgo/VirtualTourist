@@ -36,6 +36,24 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     }
     
     // MARK: Map View Functions
+    // Below function based on Udacity PinSample code - pin style
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let reuseId = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.pinTintColor = .red
+        }
+        else {
+            pinView!.annotation = annotation
+        }
+        
+        return pinView
+    }
+    
     // Allow a long press to drop a pin on the map
     // Below somewhat based on this StackOverflow post:
     // https://stackoverflow.com/questions/54570976/how-to-let-user-to-add-custom-annotation
@@ -45,18 +63,20 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     }
     
     @objc func handleLongPress(sender: UILongPressGestureRecognizer) {
-        let clickLocation = sender.location(in: view)
-        let coordinateLocation = mapView.convert(clickLocation, toCoordinateFrom: view)
-        // Create the annotation
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinateLocation
-        // Add to Core Data
-        let coreAnnotation = Pin(context: dataController.viewContext)
-        coreAnnotation.latitude = coordinateLocation.latitude
-        coreAnnotation.longitude = coordinateLocation.longitude
-        DataHelper.saveData(dataController)
-        // Add to map view
-        self.mapView.addAnnotation(annotation)
+        if sender.state == UIGestureRecognizer.State.ended {
+            let clickLocation = sender.location(in: view)
+            let coordinateLocation = mapView.convert(clickLocation, toCoordinateFrom: view)
+            // Create the annotation
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinateLocation
+            // Add to Core Data
+            let coreAnnotation = Pin(context: dataController.viewContext)
+            coreAnnotation.latitude = coordinateLocation.latitude
+            coreAnnotation.longitude = coordinateLocation.longitude
+            DataHelper.saveData(dataController)
+            // Add to map view
+            self.mapView.addAnnotation(annotation)
+        }
     }
     
     // Show the location's photos, if selected.
