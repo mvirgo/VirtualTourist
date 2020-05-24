@@ -17,7 +17,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     // MARK: Other Variables
     var dataController: DataController!
     var annotations = [MKAnnotation]()
-    // Below are default center coordinate and camera height, if none stored
+    var loadedMap: Map!
     var centerCoordinate: CLLocationCoordinate2D!
     var cameraHeight: Int32!
     
@@ -81,15 +81,19 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
             mapData = [newMap]
         }
         // Extract the center coordinate and camera height
-        let loadedMapPosition = mapData[0] as! Map
-        let lastLatitude = loadedMapPosition.centerLatitude
-        let lastLongitude = loadedMapPosition.centerLongitude
+        loadedMap = mapData[0] as? Map
+        let lastLatitude = loadedMap.centerLatitude
+        let lastLongitude = loadedMap.centerLongitude
         centerCoordinate = CLLocationCoordinate2DMake(lastLatitude, lastLongitude)
-        cameraHeight = loadedMapPosition.cameraHeight
+        cameraHeight = loadedMap.cameraHeight
     }
     
     func saveLastMapPosition() {
-        // TODO: Save the user's last map position
+        // Save the user's last map position
+        loadedMap.cameraHeight = Int32(self.mapView.camera.altitude)
+        loadedMap.centerLatitude = self.mapView.centerCoordinate.latitude
+        loadedMap.centerLongitude = self.mapView.centerCoordinate.longitude
+        
         DataHelper.saveData(dataController)
     }
 
