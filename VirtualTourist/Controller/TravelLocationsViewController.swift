@@ -16,10 +16,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Other Variables
     var dataController: DataController!
-    var annotations = [MKAnnotation]()
     var loadedMap: Map!
-    var centerCoordinate: CLLocationCoordinate2D!
-    var cameraHeight: Int32!
     
     // MARK: View Functions
     override func viewDidLoad() {
@@ -29,14 +26,8 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         
         // Load the user's last location & zoom level
         loadLastMapPosition()
-        // Set the map view's zoom level (altitude) and center coordinate
-        self.mapView.camera.altitude = CLLocationDistance(cameraHeight)
-        self.mapView.centerCoordinate = centerCoordinate
-        
-        // TODO: Load in any stored annotations/pins
-        
-        // Add any annotations to the map
-        self.mapView.addAnnotations(annotations)
+        // Load in any stored annotations/pins to the map view
+        loadPins()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -59,8 +50,12 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         // Create the annotation
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinateLocation
-        // Add to annotations array and mapView
-        annotations.append(annotation)
+        // Add to Core Data
+        let coreAnnotation = Pin(context: dataController.viewContext)
+        coreAnnotation.latitude = coordinateLocation.latitude
+        coreAnnotation.longitude = coordinateLocation.longitude
+        DataHelper.saveData(dataController)
+        // Add to map view
         self.mapView.addAnnotation(annotation)
     }
     
@@ -80,12 +75,11 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
             DataHelper.saveData(dataController)
             mapData = [newMap]
         }
-        // Extract the center coordinate and camera height
+        
+        // Set the map view's zoom level (altitude) and center coordinate
         loadedMap = mapData[0] as? Map
-        let lastLatitude = loadedMap.centerLatitude
-        let lastLongitude = loadedMap.centerLongitude
-        centerCoordinate = CLLocationCoordinate2DMake(lastLatitude, lastLongitude)
-        cameraHeight = loadedMap.cameraHeight
+        self.mapView.camera.altitude = CLLocationDistance(loadedMap.cameraHeight)
+        self.mapView.centerCoordinate = CLLocationCoordinate2DMake(loadedMap.centerLatitude, loadedMap.centerLongitude)
     }
     
     func saveLastMapPosition() {
@@ -95,6 +89,20 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         loadedMap.centerLongitude = self.mapView.centerCoordinate.longitude
         
         DataHelper.saveData(dataController)
+    }
+    
+    func loadPins() {
+        // Fetch any annotations
+        let annotationData = DataHelper.fetchData(dataController, "Pin")
+        // If there are any, add to the map
+        if annotationData.count > 0 {
+            for annotation in annotationData {
+                let pin = annotation as! Pin
+                let pinForMap = MKPointAnnotation()
+                pinForMap.coordinate = CLLocationCoordinate2DMake(pin.latitude, pin.longitude)
+                self.mapView.addAnnotation(pinForMap)
+            }
+        }
     }
 
 }
