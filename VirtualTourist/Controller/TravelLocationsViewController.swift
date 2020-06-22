@@ -17,6 +17,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     // MARK: Other Variables
     var dataController: DataController!
     var loadedMap: Map!
+    var selectedCoordinate: CLLocationCoordinate2D!
     
     // MARK: View Functions
     override func viewDidLoad() {
@@ -81,7 +82,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     
     // Show the location's photos, if selected.
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        // TODO: Add handling of which location was selected
+        selectedCoordinate = view.annotation?.coordinate
         performSegue(withIdentifier: "showLocationPhotos", sender: nil)
     }
     
@@ -122,6 +123,16 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
                 pinForMap.coordinate = CLLocationCoordinate2DMake(pin.latitude, pin.longitude)
                 self.mapView.addAnnotation(pinForMap)
             }
+        }
+    }
+    
+    // MARK: Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Send selected coordinates to Photo Album
+        // TODO: Better utilize data/pin in passing info
+        if let vc = segue.destination as? PhotoAlbumViewController {
+            vc.dataController = dataController
+            vc.selectedCoordinate = selectedCoordinate
         }
     }
 
