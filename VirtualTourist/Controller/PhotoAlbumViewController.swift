@@ -19,7 +19,7 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
     // MARK: Other Variables
     var dataController: DataController!
     var loadedMap: Map!
-    var selectedCoordinate: CLLocationCoordinate2D!
+    var selectedPin: Pin!
     // TODO: Switch below to actually store images
     var images: LocationAlbum!
     
@@ -29,13 +29,13 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         // Carry over map details
         let pinForMap = MKPointAnnotation()
-        pinForMap.coordinate = selectedCoordinate
+        pinForMap.coordinate = CLLocationCoordinate2DMake(selectedPin.latitude, selectedPin.longitude)
         self.mapView.addAnnotation(pinForMap)
         // Set region of mini-map, dividing latitude span by 4 to be closer to original zoom
-        self.mapView.region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(selectedCoordinate.latitude, selectedCoordinate.longitude), span: MKCoordinateSpan(latitudeDelta: loadedMap.spanLatitude / 4, longitudeDelta: loadedMap.spanLongitude))
+        self.mapView.region = MKCoordinateRegion(center: pinForMap.coordinate, span: MKCoordinateSpan(latitudeDelta: loadedMap.spanLatitude / 4, longitudeDelta: loadedMap.spanLongitude))
         // TODO: Change below logic if images in location already obtained
         // Get photos at the current location
-        APIClient.getPhotosByLocations(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, completion: handlePhotoData(response:error:))
+        APIClient.getPhotosByLocations(latitude: selectedPin.latitude, longitude: selectedPin.longitude, completion: handlePhotoData(response:error:))
         // TODO: Go load the images themselves
     }
     

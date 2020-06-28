@@ -17,7 +17,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     // MARK: Other Variables
     var dataController: DataController!
     var loadedMap: Map!
-    var selectedCoordinate: CLLocationCoordinate2D!
+    var selectedPin: Pin!
     
     // MARK: View Functions
     override func viewDidLoad() {
@@ -82,7 +82,12 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     
     // Show the location's photos, if selected.
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        selectedCoordinate = view.annotation?.coordinate
+        // Get the pin with the selected coordinates
+        let latPredicate = NSPredicate(format: "latitude == %@", NSNumber(value: (view.annotation?.coordinate.latitude)!))
+        let longPredicate = NSPredicate(format: "longitude == %@", NSNumber(value: (view.annotation?.coordinate.longitude)!))
+        let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [latPredicate, longPredicate])
+        let results = DataHelper.fetchDataWithPredicate(dataController, andPredicate, "Pin")
+        selectedPin = results[0] as? Pin
         performSegue(withIdentifier: "showLocationPhotos", sender: nil)
     }
     
@@ -129,11 +134,10 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     // MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Send selected coordinates to Photo Album
-        // TODO: Better utilize data/pin in passing info
         if let vc = segue.destination as? PhotoAlbumViewController {
             vc.dataController = dataController
             vc.loadedMap = loadedMap
-            vc.selectedCoordinate = selectedCoordinate
+            vc.selectedPin = selectedPin
         }
     }
 
