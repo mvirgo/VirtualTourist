@@ -31,8 +31,8 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
         let pinForMap = MKPointAnnotation()
         pinForMap.coordinate = selectedCoordinate
         self.mapView.addAnnotation(pinForMap)
-        self.mapView.camera.altitude = CLLocationDistance(loadedMap.cameraHeight)
-        self.mapView.centerCoordinate = selectedCoordinate
+        // Set region of mini-map, dividing latitude span by 4 to be closer to original zoom
+        self.mapView.region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(selectedCoordinate.latitude, selectedCoordinate.longitude), span: MKCoordinateSpan(latitudeDelta: loadedMap.spanLatitude / 4, longitudeDelta: loadedMap.spanLongitude))
         // TODO: Change below logic if images in location already obtained
         // Get photos at the current location
         APIClient.getPhotosByLocations(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, completion: handlePhotoData(response:error:))

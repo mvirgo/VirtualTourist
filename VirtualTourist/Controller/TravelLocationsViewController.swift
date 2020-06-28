@@ -97,15 +97,15 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
             mapData = [newMap]
         }
         
-        // Set the map view's zoom level (altitude) and center coordinate
+        // Set the map view's region for zoom and center coordinate
         loadedMap = mapData[0] as? Map
-        self.mapView.camera.altitude = CLLocationDistance(loadedMap.cameraHeight)
-        self.mapView.centerCoordinate = CLLocationCoordinate2DMake(loadedMap.centerLatitude, loadedMap.centerLongitude)
+        self.mapView.region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(loadedMap.centerLatitude, loadedMap.centerLongitude), span: MKCoordinateSpan(latitudeDelta: loadedMap.spanLatitude, longitudeDelta: loadedMap.spanLongitude))
     }
     
     func saveLastMapPosition() {
         // Save the user's last map position
-        loadedMap.cameraHeight = Int32(self.mapView.camera.altitude)
+        loadedMap.spanLatitude = self.mapView.region.span.latitudeDelta
+        loadedMap.spanLongitude = self.mapView.region.span.longitudeDelta
         loadedMap.centerLatitude = self.mapView.centerCoordinate.latitude
         loadedMap.centerLongitude = self.mapView.centerCoordinate.longitude
         
