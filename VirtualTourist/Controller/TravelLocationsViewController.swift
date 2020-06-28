@@ -132,6 +132,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         // TODO: Better utilize data/pin in passing info
         if let vc = segue.destination as? PhotoAlbumViewController {
             vc.dataController = dataController
+            vc.loadedMap = loadedMap
             vc.selectedCoordinate = selectedCoordinate
         }
     }
