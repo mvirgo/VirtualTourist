@@ -14,7 +14,7 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
     // MARK: IBOutlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var newCollectionButton: UIBarButtonItem!
-    
+    @IBOutlet weak var noImagesLabel: UILabel!
     
     // MARK: Other Variables
     var dataController: DataController!
@@ -67,6 +67,9 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
         } else {
             // TODO: Update this based on what to do with images
             images = response!
+            if images.photo.count > 0 {
+                noImagesLabel.isHidden = true
+            }
         }
     }
     

@@ -101,20 +101,25 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Images Available for Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="qdQ-k0-DFJ">
+                                <rect key="frame" x="38.5" y="511" width="337.5" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="qdQ-k0-DFJ" firstAttribute="centerY" secondItem="rX7-ti-3SC" secondAttribute="centerY" id="5ed-EN-Q0C"/>
                             <constraint firstItem="Fng-Y3-DKV" firstAttribute="trailing" secondItem="tXw-G3-x2O" secondAttribute="trailing" id="99V-Oa-HzN"/>
                             <constraint firstItem="Fng-Y3-DKV" firstAttribute="bottom" secondItem="tXw-G3-x2O" secondAttribute="bottom" id="GYt-Ah-Iss"/>
                             <constraint firstItem="Fng-Y3-DKV" firstAttribute="top" secondItem="rX7-ti-3SC" secondAttribute="bottom" id="HUz-cc-L7X"/>
                             <constraint firstItem="ivC-k9-Leo" firstAttribute="top" secondItem="tXw-G3-x2O" secondAttribute="top" id="O0r-xp-0GU"/>
                             <constraint firstItem="rX7-ti-3SC" firstAttribute="top" secondItem="ivC-k9-Leo" secondAttribute="bottom" id="OSs-bo-01V"/>
-                            <constraint firstItem="Fng-Y3-DKV" firstAttribute="top" secondItem="rX7-ti-3SC" secondAttribute="bottom" id="V5W-cF-dwO"/>
                             <constraint firstItem="rX7-ti-3SC" firstAttribute="trailing" secondItem="tXw-G3-x2O" secondAttribute="trailing" id="XHC-A2-BiC"/>
                             <constraint firstItem="rX7-ti-3SC" firstAttribute="leading" secondItem="tXw-G3-x2O" secondAttribute="leading" id="dBu-nZ-ui4"/>
                             <constraint firstItem="Fng-Y3-DKV" firstAttribute="leading" secondItem="tXw-G3-x2O" secondAttribute="leading" id="huZ-me-HN7"/>
-                            <constraint firstItem="rX7-ti-3SC" firstAttribute="top" secondItem="ivC-k9-Leo" secondAttribute="bottom" id="jZ0-KL-jp7"/>
                             <constraint firstItem="ivC-k9-Leo" firstAttribute="leading" secondItem="tXw-G3-x2O" secondAttribute="leading" id="p2U-1w-TsA"/>
+                            <constraint firstItem="qdQ-k0-DFJ" firstAttribute="centerX" secondItem="rX7-ti-3SC" secondAttribute="centerX" id="p3C-8D-CzK"/>
                             <constraint firstItem="ivC-k9-Leo" firstAttribute="trailing" secondItem="tXw-G3-x2O" secondAttribute="trailing" id="w4U-Ub-D2u"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tXw-G3-x2O"/>
@@ -123,6 +128,7 @@
                     <connections>
                         <outlet property="mapView" destination="ivC-k9-Leo" id="pWO-Pk-omK"/>
                         <outlet property="newCollectionButton" destination="0XE-sE-3Rn" id="PqC-Je-vwn"/>
+                        <outlet property="noImagesLabel" destination="qdQ-k0-DFJ" id="dqS-C9-Nkc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Smo-a8-m4j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
