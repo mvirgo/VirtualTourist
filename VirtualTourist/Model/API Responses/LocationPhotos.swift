@@ -12,7 +12,7 @@ struct LocationPhotos: Codable {
     let id: String
     let owner: String
     let secret: String
-    let server: Int
+    let server: String
     let farm: Int
     let title: String
     

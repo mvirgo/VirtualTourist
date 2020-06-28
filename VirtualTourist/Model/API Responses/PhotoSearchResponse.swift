@@ -9,7 +9,7 @@
 import Foundation
 
 struct PhotoSearchResponse: Codable {
-    let photos: [LocationAlbum]
+    let photos: LocationAlbum
     
     enum CodingKeys: String, CodingKey {
         case photos
