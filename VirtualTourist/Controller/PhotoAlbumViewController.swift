@@ -77,7 +77,6 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
             alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.navigationController?.present(alertVC, animated: true, completion: nil)
         } else {
-            // TODO: Update this based on what to do with images
             imagesDownload = response!
             if imagesDownload.photo.count == 0 {
                 noImagesLabel.isHidden = false
@@ -85,10 +84,32 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
             // Load the images themselves
             for photoData in imagesDownload.photo {
                 let photoURL = "https://farm\(photoData.farm).staticflickr.com/\(photoData.server)/\(photoData.id)_\(photoData.secret).jpg"
-                // TODO: Get the actual photo
-                // TODO: Store the photo in Core Data
-                // TODO: Add to savedPhotos or show in collection view?
+                // Get the actual photo
+                APIClient.downloadImage(imageURLString: photoURL, completion: handleSinglePhoto(photoData:error:))
             }
+        }
+    }
+    
+    func handleSinglePhoto(photoData: Data?, error: Error?) {
+        if let _ = error {
+            // TODO: Do something about error
+        } else {
+            // Store the photo in Core Data
+            let newPhoto = Photo(context: dataController.viewContext)
+            newPhoto.image = photoData
+            newPhoto.pin = selectedPin
+            saveData()
+            // TODO: Add to savedPhotos or show in collection view?
+        }
+    }
+    
+    // MARK: Other functions
+    func saveData() {
+        // Save the view context
+        do {
+            try dataController.viewContext.save()
+        } catch {
+            print("Failed to save photo.")
         }
     }
     

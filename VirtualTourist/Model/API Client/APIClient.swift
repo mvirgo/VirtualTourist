@@ -71,4 +71,27 @@ class APIClient {
             }
         }
     }
+    
+    class func downloadImage(imageURLString: String, completion: @escaping (Data?, Error?) -> Void) {
+        guard let imageURL = URL(string: imageURLString) else {
+            print("Cannot build URL.")
+            return
+        }
+        
+        let task = URLSession.shared.downloadTask(with: imageURL) { (photo, response, error) in
+            guard let photo = photo else {
+                print("Photo is nil")
+                return
+            }
+            // Convert image to data for later use
+            let imageData = try! Data(contentsOf: photo)
+            
+            if let error = error {
+                completion(nil, error)
+            } else {
+                completion(imageData, nil)
+            }
+        }
+        task.resume()
+    }
 }
