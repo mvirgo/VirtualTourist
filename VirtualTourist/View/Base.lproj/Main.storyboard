@@ -91,13 +91,16 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="vct-t1-FJd">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="vct-t1-FJd" customClass="PhotoCollectionViewCell" customModule="VirtualTourist" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="cr0-az-wan">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="cr0-az-wan" customClass="UIImageView">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="imageCell" destination="cr0-az-wan" id="qLW-tv-QYo"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -126,6 +129,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Photo Album" id="Nyw-be-L6q"/>
                     <connections>
+                        <outlet property="collectionView" destination="rX7-ti-3SC" id="223-cp-NNe"/>
                         <outlet property="mapView" destination="ivC-k9-Leo" id="pWO-Pk-omK"/>
                         <outlet property="newCollectionButton" destination="0XE-sE-3Rn" id="PqC-Je-vwn"/>
                         <outlet property="noImagesLabel" destination="qdQ-k0-DFJ" id="dqS-C9-Nkc"/>

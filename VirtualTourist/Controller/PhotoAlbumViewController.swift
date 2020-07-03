@@ -9,10 +9,11 @@
 import MapKit
 import UIKit
 
-class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
+class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource {
     
     // MARK: IBOutlets
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var newCollectionButton: UIBarButtonItem!
     @IBOutlet weak var noImagesLabel: UILabel!
     
@@ -26,14 +27,18 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
     // MARK: View Functions
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        collectionView.dataSource = self
         setMap()
         if selectedPin.photos?.count == 0 {
             // Get photos at the current location
             getPhotosFromFlickr()
         } else {
-            // TODO: Get photos from Core Data
+            // Get photos from Core Data
+            let pinPhotos = selectedPin.photos!
+            for photo in pinPhotos {
+                savedPhotos.append(photo as! Photo)
+            }
         }
-        // TODO: Show photos in collection view
     }
     
     // MARK: Map View Functions
@@ -63,6 +68,21 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
         }
         
         return pinView
+    }
+    
+    // MARK: Collection View Functions
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return savedPhotos.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! PhotoCollectionViewCell
+        let photo = savedPhotos[(indexPath as NSIndexPath).row]
+            
+        // Set the image in the cell
+        cell.imageCell.image = UIImage(data: photo.image!)
+        
+        return cell
     }
     
     // MARK: API Calls
@@ -99,7 +119,12 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
             newPhoto.image = photoData
             newPhoto.pin = selectedPin
             saveData()
-            // TODO: Add to savedPhotos or show in collection view?
+            // Add to savedPhotos array
+            savedPhotos.append(newPhoto)
+            // Reload the collection view for each new image
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
     }
     
