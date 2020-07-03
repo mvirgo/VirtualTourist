@@ -82,7 +82,9 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
         let photo = savedPhotos[(indexPath as NSIndexPath).row]
             
         // Set the image in the cell
-        cell.imageCell.image = UIImage(data: photo.image!)
+        if let imageData = photo.image {
+            cell.imageCell.image = UIImage(data: imageData)
+        }
         
         return cell
     }
@@ -149,7 +151,13 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
     
     // MARK: IBActions
     @IBAction func newCollectionButtonPressed(_ sender: Any) {
-        // TODO: Implement logic to load a new collection, and delete old one
+        // Delete the existing photos
+        for photo in savedPhotos {
+            dataController.viewContext.delete(photo)
+        }
+        // TODO: Change the below to get new photos instead of the same page
+        // Get new photos from the Flickr API
+        getPhotosFromFlickr()
     }
     
     // MARK: Navigation
