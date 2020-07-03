@@ -34,13 +34,16 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
         if selectedPin.photos?.count == 0 {
             // Get photos at the current location
             getPhotosFromFlickr()
-        } else {
+        } else if selectedPin.photos?.count != savedPhotos.count {
+            // Make sure savedPhotos is clear
+            savedPhotos.removeAll()
             // Get photos from Core Data
             let pinPhotos = selectedPin.photos!
             for photo in pinPhotos {
                 savedPhotos.append(photo as! Photo)
             }
-        }
+            collectionView.reloadData()
+        } // Else condition means same photos; don't need to reload
     }
     
     // MARK: Map View Functions
@@ -165,6 +168,7 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
         // Send selected photo to detail view
         if let vc = segue.destination as? PhotoDetailViewController {
             vc.photo = selectedPhoto
+            vc.dataController = dataController
         }
     }
 }
