@@ -9,7 +9,7 @@
 import MapKit
 import UIKit
 
-class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource {
+class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     
     // MARK: IBOutlets
     @IBOutlet weak var mapView: MKMapView!
@@ -22,11 +22,13 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
     var loadedMap: Map!
     var selectedPin: Pin!
     var imagesDownload: LocationAlbum!
+    var selectedPhoto: Photo!
     var savedPhotos = [Photo]()
     
     // MARK: View Functions
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        collectionView.delegate = self
         collectionView.dataSource = self
         setMap()
         if selectedPin.photos?.count == 0 {
@@ -85,6 +87,13 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Get the photo from the array and set to selectedPhoto
+        selectedPhoto = savedPhotos[(indexPath as NSIndexPath).row]
+        // Segue to detail view
+        performSegue(withIdentifier: "showPhotoDetail", sender: nil)
+    }
+    
     // MARK: API Calls
     func getPhotosFromFlickr() {
         APIClient.getPhotosByLocations(latitude: selectedPin.latitude, longitude: selectedPin.longitude, completion: handlePhotoData(response:error:))
@@ -112,7 +121,7 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
     
     func handleSinglePhoto(photoData: Data?, error: Error?) {
         if let _ = error {
-            // TODO: Do something about error
+            print("Error downloading image, not stored.")
         } else {
             // Store the photo in Core Data
             let newPhoto = Photo(context: dataController.viewContext)
@@ -141,5 +150,13 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
     // MARK: IBActions
     @IBAction func newCollectionButtonPressed(_ sender: Any) {
         // TODO: Implement logic to load a new collection, and delete old one
+    }
+    
+    // MARK: Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Send selected photo to detail view
+        if let vc = segue.destination as? PhotoDetailViewController {
+            vc.photo = selectedPhoto
+        }
     }
 }

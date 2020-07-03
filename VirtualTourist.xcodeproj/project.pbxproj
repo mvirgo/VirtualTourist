@@ -21,6 +21,7 @@
 		7A87AC6A2479CC6C0071A2C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A87AC682479CC6C0071A2C9 /* LaunchScreen.storyboard */; };
 		7A87AC752479D18B0071A2C9 /* PhotoAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A87AC742479D18B0071A2C9 /* PhotoAlbumViewController.swift */; };
 		7A9DC98524AEAB9B00DCF469 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9DC98424AEAB9B00DCF469 /* PhotoCollectionViewCell.swift */; };
+		7A9DC98724AEBD7900DCF469 /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9DC98624AEBD7900DCF469 /* PhotoDetailViewController.swift */; };
 		7A9FCA892479F38B00BDB1D3 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9FCA882479F38B00BDB1D3 /* DataController.swift */; };
 		7A9FCA8B2479F76D00BDB1D3 /* DataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9FCA8A2479F76D00BDB1D3 /* DataHelper.swift */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 		7A87AC6B2479CC6C0071A2C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A87AC742479D18B0071A2C9 /* PhotoAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumViewController.swift; sourceTree = "<group>"; };
 		7A9DC98424AEAB9B00DCF469 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		7A9DC98624AEBD7900DCF469 /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
 		7A9FCA882479F38B00BDB1D3 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		7A9FCA8A2479F76D00BDB1D3 /* DataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +143,7 @@
 				7A87AC742479D18B0071A2C9 /* PhotoAlbumViewController.swift */,
 				7A9FCA8A2479F76D00BDB1D3 /* DataHelper.swift */,
 				7A9DC98424AEAB9B00DCF469 /* PhotoCollectionViewCell.swift */,
+				7A9DC98624AEBD7900DCF469 /* PhotoDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 				7A43909024A0686500A845C4 /* PhotoSearchRequest.swift in Sources */,
 				7A87AC5B2479CC6B0071A2C9 /* AppDelegate.swift in Sources */,
 				7A9FCA8B2479F76D00BDB1D3 /* DataHelper.swift in Sources */,
+				7A9DC98724AEBD7900DCF469 /* PhotoDetailViewController.swift in Sources */,
 				7A43909424A06B9700A845C4 /* LocationPhotos.swift in Sources */,
 				7A87AC752479D18B0071A2C9 /* PhotoAlbumViewController.swift in Sources */,
 				7A43909224A0687300A845C4 /* PhotoSearchResponse.swift in Sources */,
