@@ -15,17 +15,75 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Virtual Tourist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dqx-Aj-Mis">
-                                <rect key="frame" x="62" y="423" width="290" height="60"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5ng-du-YR9">
+                                <rect key="frame" x="102" y="258" width="210" height="390"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin" translatesAutoresizingMaskIntoConstraints="NO" id="W6r-dD-toU">
+                                        <rect key="frame" x="0.0" y="0.0" width="210" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="tgD-ZM-6uk"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Virtual Tourist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dqx-Aj-Mis">
+                                        <rect key="frame" x="0.0" y="110" width="210" height="60"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleAspectFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XSx-z0-TCR">
+                                        <rect key="frame" x="0.0" y="180" width="210" height="100"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="liberty" translatesAutoresizingMaskIntoConstraints="NO" id="8kh-Mb-8cY">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="AH1-3N-jKE"/>
+                                                    <constraint firstAttribute="width" constant="100" id="MId-x4-I4h"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="taj" translatesAutoresizingMaskIntoConstraints="NO" id="iXX-9w-nr5">
+                                                <rect key="frame" x="110" y="0.0" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="Ny7-WO-kUp"/>
+                                                    <constraint firstAttribute="width" constant="100" id="gtK-AL-mEV"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="210" id="adw-hT-AET"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xyU-WQ-wY3">
+                                        <rect key="frame" x="0.0" y="290" width="210" height="100"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eiffel" translatesAutoresizingMaskIntoConstraints="NO" id="HIY-lp-jlo">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="Mye-70-WSE"/>
+                                                    <constraint firstAttribute="width" constant="100" id="rEO-X9-h3A"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pyramid" translatesAutoresizingMaskIntoConstraints="NO" id="mcW-eS-Bze">
+                                                <rect key="frame" x="110" y="0.0" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="EbG-Eh-msM"/>
+                                                    <constraint firstAttribute="width" constant="100" id="wWT-Rb-vfB"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="210" id="MOJ-Oo-eck"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="210" id="V60-SW-l7o"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="0.11764705882352941" green="0.28627450980392155" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="dqx-Aj-Mis" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="7so-C8-TdU"/>
-                            <constraint firstItem="dqx-Aj-Mis" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="TKC-b1-iuS"/>
+                            <constraint firstItem="5ng-du-YR9" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ILT-9C-Wl6"/>
+                            <constraint firstItem="5ng-du-YR9" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="fFX-Gb-oZl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -35,4 +93,11 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="eiffel" width="1200" height="1200"/>
+        <image name="liberty" width="1200" height="1200"/>
+        <image name="pin" width="645" height="764"/>
+        <image name="pyramid" width="1200" height="1200"/>
+        <image name="taj" width="1200" height="1200"/>
+    </resources>
 </document>
