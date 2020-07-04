@@ -88,6 +88,9 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [latPredicate, longPredicate])
         let results = DataHelper.fetchDataWithPredicate(dataController, andPredicate, "Pin")
         selectedPin = results[0] as? Pin
+        // Added based on https://stackoverflow.com/questions/45529253/cant-select-mkviewannotation-twice
+        mapView.deselectAnnotation(view.annotation, animated: true)
+        // Segue to location photos
         performSegue(withIdentifier: "showLocationPhotos", sender: nil)
     }
     
