@@ -24,6 +24,7 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
     var imagesDownload: LocationAlbum!
     var selectedPhoto: Photo!
     var savedPhotos = [Photo]()
+    var numberOfPhotos = 0
     
     // MARK: View Functions
     override func viewDidAppear(_ animated: Bool) {
@@ -42,6 +43,7 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
             for photo in pinPhotos {
                 savedPhotos.append(photo as! Photo)
             }
+            numberOfPhotos = savedPhotos.count
             collectionView.reloadData()
         } // Else condition means same photos; don't need to reload
     }
@@ -77,17 +79,26 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
     
     // MARK: Collection View Functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return savedPhotos.count
+        return numberOfPhotos
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! PhotoCollectionViewCell
-        let photo = savedPhotos[(indexPath as NSIndexPath).row]
-            
-        // Set the image in the cell
-        if let imageData = photo.image {
-            cell.imageCell.image = UIImage(data: imageData)
+        let indexInt = (indexPath as NSIndexPath).row
+        
+        // Fill image cell if downloaded, or use placeholder
+        if indexInt < savedPhotos.count {
+            let photo = savedPhotos[indexInt]
+            // Set the image in the cell
+            if let imageData = photo.image {
+                cell.imageCell.image = UIImage(data: imageData)
+            }
+        } else {
+            // Use placeholder image
+            cell.imageCell.image = UIImage(named: "placeholder")
         }
+        // Show full image in cell
+        cell.imageCell.contentMode = .scaleToFill
         
         return cell
     }
@@ -116,6 +127,7 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
                 noImagesLabel.isHidden = false
             }
             // Load the images themselves
+            numberOfPhotos = imagesDownload.photo.count
             for photoData in imagesDownload.photo {
                 let photoURL = "https://farm\(photoData.farm).staticflickr.com/\(photoData.server)/\(photoData.id)_\(photoData.secret).jpg"
                 // Get the actual photo
@@ -158,6 +170,10 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
         for photo in savedPhotos {
             dataController.viewContext.delete(photo)
         }
+        // Make sure savedPhotos is empty and reset collection view
+        savedPhotos.removeAll()
+        numberOfPhotos = 0
+        collectionView.reloadData()
         // TODO: Change the below to get new photos instead of the same page
         // Get new photos from the Flickr API
         getPhotosFromFlickr()
