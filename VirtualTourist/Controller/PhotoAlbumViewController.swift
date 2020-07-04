@@ -25,6 +25,7 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
     var selectedPhoto: Photo!
     var savedPhotos = [Photo]()
     var numberOfPhotos = 0
+    var newCollectionButtonEnabled = true
     
     // MARK: View Functions
     override func viewDidAppear(_ animated: Bool) {
@@ -112,6 +113,9 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
     
     // MARK: API Calls
     func getPhotosFromFlickr() {
+        // Disable the New Collection button
+        setNewCollectionButtonEnablement(false)
+        // Call the Flickr API
         APIClient.getPhotosByLocations(latitude: selectedPin.latitude, longitude: selectedPin.longitude, completion: handlePhotoData(response:error:))
     }
     
@@ -150,6 +154,10 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
             // Reload the collection view for each new image
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
+                // Enable New Collection button, if last one
+                if self.savedPhotos.count == self.numberOfPhotos {
+                    self.setNewCollectionButtonEnablement(true)
+                }
             }
         }
     }
@@ -162,6 +170,10 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
         } catch {
             print("Failed to save photo.")
         }
+    }
+    
+    func setNewCollectionButtonEnablement(_ enable: Bool) {
+        newCollectionButton.isEnabled = enable
     }
     
     // MARK: IBActions
