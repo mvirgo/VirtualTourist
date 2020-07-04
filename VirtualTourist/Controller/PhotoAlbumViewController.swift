@@ -9,17 +9,16 @@
 import MapKit
 import UIKit
 
-class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     // MARK: IBOutlets
-    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var mapImageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var newCollectionButton: UIBarButtonItem!
     @IBOutlet weak var noImagesLabel: UILabel!
     
     // MARK: Other Variables
     var dataController: DataController!
-    var loadedMap: Map!
     var selectedPin: Pin!
     var imagesDownload: LocationAlbum!
     var selectedPhoto: Photo!
@@ -32,7 +31,6 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
         super.viewDidAppear(animated)
         collectionView.delegate = self
         collectionView.dataSource = self
-        setMap()
         if selectedPin.photos?.count == 0 {
             // Get photos at the current location
             getPhotosFromFlickr()
@@ -47,35 +45,6 @@ class PhotoAlbumViewController: UIViewController, MKMapViewDelegate, UICollectio
             numberOfPhotos = savedPhotos.count
             collectionView.reloadData()
         } // Else condition means same photos; don't need to reload
-    }
-    
-    // MARK: Map View Functions
-    func setMap() {
-        mapView.delegate = self
-        // Carry over map details
-        let pinForMap = MKPointAnnotation()
-        pinForMap.coordinate = CLLocationCoordinate2DMake(selectedPin.latitude, selectedPin.longitude)
-        self.mapView.addAnnotation(pinForMap)
-        // Set region of mini-map, dividing latitude span by 4 to be closer to original zoom
-        self.mapView.region = MKCoordinateRegion(center: pinForMap.coordinate, span: MKCoordinateSpan(latitudeDelta: loadedMap.spanLatitude / 4, longitudeDelta: loadedMap.spanLongitude))
-    }
-    
-    // Below function based on Udacity PinSample code - pin style
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        let reuseId = "pin"
-        
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.pinTintColor = .red
-        }
-        else {
-            pinView!.annotation = annotation
-        }
-        
-        return pinView
     }
     
     // MARK: Collection View Functions

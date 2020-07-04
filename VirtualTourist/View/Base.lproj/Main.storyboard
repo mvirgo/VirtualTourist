@@ -63,12 +63,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ivC-k9-Leo">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ogh-Lg-xUh">
                                 <rect key="frame" x="0.0" y="88" width="414" height="150"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="HgX-S3-1cS"/>
+                                    <constraint firstAttribute="height" constant="150" id="M24-XT-uv0"/>
                                 </constraints>
-                            </mapView>
+                            </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="Fng-Y3-DKV">
                                 <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
@@ -112,25 +112,25 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="ogh-Lg-xUh" firstAttribute="leading" secondItem="tXw-G3-x2O" secondAttribute="leading" id="5Dt-Ob-GXi"/>
                             <constraint firstItem="qdQ-k0-DFJ" firstAttribute="centerY" secondItem="rX7-ti-3SC" secondAttribute="centerY" id="5ed-EN-Q0C"/>
                             <constraint firstItem="Fng-Y3-DKV" firstAttribute="trailing" secondItem="tXw-G3-x2O" secondAttribute="trailing" id="99V-Oa-HzN"/>
                             <constraint firstItem="Fng-Y3-DKV" firstAttribute="bottom" secondItem="tXw-G3-x2O" secondAttribute="bottom" id="GYt-Ah-Iss"/>
                             <constraint firstItem="Fng-Y3-DKV" firstAttribute="top" secondItem="rX7-ti-3SC" secondAttribute="bottom" id="HUz-cc-L7X"/>
-                            <constraint firstItem="ivC-k9-Leo" firstAttribute="top" secondItem="tXw-G3-x2O" secondAttribute="top" id="O0r-xp-0GU"/>
-                            <constraint firstItem="rX7-ti-3SC" firstAttribute="top" secondItem="ivC-k9-Leo" secondAttribute="bottom" id="OSs-bo-01V"/>
+                            <constraint firstItem="tXw-G3-x2O" firstAttribute="trailing" secondItem="ogh-Lg-xUh" secondAttribute="trailing" id="Ozb-PV-vDd"/>
                             <constraint firstItem="rX7-ti-3SC" firstAttribute="trailing" secondItem="tXw-G3-x2O" secondAttribute="trailing" id="XHC-A2-BiC"/>
                             <constraint firstItem="rX7-ti-3SC" firstAttribute="leading" secondItem="tXw-G3-x2O" secondAttribute="leading" id="dBu-nZ-ui4"/>
                             <constraint firstItem="Fng-Y3-DKV" firstAttribute="leading" secondItem="tXw-G3-x2O" secondAttribute="leading" id="huZ-me-HN7"/>
-                            <constraint firstItem="ivC-k9-Leo" firstAttribute="leading" secondItem="tXw-G3-x2O" secondAttribute="leading" id="p2U-1w-TsA"/>
+                            <constraint firstItem="rX7-ti-3SC" firstAttribute="top" secondItem="ogh-Lg-xUh" secondAttribute="bottom" id="i7S-4R-yhw"/>
                             <constraint firstItem="qdQ-k0-DFJ" firstAttribute="centerX" secondItem="rX7-ti-3SC" secondAttribute="centerX" id="p3C-8D-CzK"/>
-                            <constraint firstItem="ivC-k9-Leo" firstAttribute="trailing" secondItem="tXw-G3-x2O" secondAttribute="trailing" id="w4U-Ub-D2u"/>
+                            <constraint firstItem="ogh-Lg-xUh" firstAttribute="top" secondItem="tXw-G3-x2O" secondAttribute="top" id="vsQ-SG-Pcy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tXw-G3-x2O"/>
                     </view>
                     <navigationItem key="navigationItem" title="Photo Album" id="Nyw-be-L6q"/>
                     <connections>
                         <outlet property="collectionView" destination="rX7-ti-3SC" id="223-cp-NNe"/>
-                        <outlet property="mapView" destination="ivC-k9-Leo" id="pWO-Pk-omK"/>
+                        <outlet property="mapImageView" destination="ogh-Lg-xUh" id="WoN-Hh-ZWs"/>
                         <outlet property="newCollectionButton" destination="0XE-sE-3Rn" id="PqC-Je-vwn"/>
                         <outlet property="noImagesLabel" destination="qdQ-k0-DFJ" id="dqS-C9-Nkc"/>
                         <segue destination="W6r-Y9-m7m" kind="show" identifier="showPhotoDetail" id="ADC-ZE-h5k"/>

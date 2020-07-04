@@ -134,13 +134,55 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    // MARK: Map Screenshot Functions
+    func setMapSnapshot() -> MKMapSnapshotter {
+        // Set map options to use selected pin and current region span
+        let snapshotOptions = MKMapSnapshotter.Options()
+        let centerCoordinate = CLLocationCoordinate2D(latitude: selectedPin.latitude, longitude: selectedPin.longitude)
+        let mapSpan = MKCoordinateSpan(latitudeDelta: mapView.region.span.latitudeDelta, longitudeDelta: mapView.region.span.longitudeDelta)
+        snapshotOptions.region = MKCoordinateRegion(center: centerCoordinate, span: mapSpan)
+        // Create the map snapshotter with given options
+        let mapSnapshot = MKMapSnapshotter(options: snapshotOptions)
+        
+        return mapSnapshot
+    }
+    
     // MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Send selected coordinates to Photo Album
+        // Create a map snapshot to use on next screen
+        let mapSnapshot = setMapSnapshot()
+        // Send selected coordinates and map snapshot to Photo Album
         if let vc = segue.destination as? PhotoAlbumViewController {
             vc.dataController = dataController
-            vc.loadedMap = loadedMap
             vc.selectedPin = selectedPin
+            // Take map snapshot and add pin
+            // Drawing of pin adapted from: https://nshipster.com/mktileoverlay-mkmapsnapshotter-mkdirections/
+            mapSnapshot.start { (mapImage, error) -> Void in
+                if let snapshot = mapImage {
+                    let pin = MKPinAnnotationView()
+                    let image = snapshot.image
+                    
+                    UIGraphicsBeginImageContextWithOptions(image.size, true, image.scale)
+                    image.draw(at: CGPoint.zero)
+
+                    let visibleRect = CGRect(origin: CGPoint.zero, size: image.size)
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = CLLocationCoordinate2D(latitude: self.selectedPin.latitude, longitude: self.selectedPin.longitude)
+                    var point = snapshot.point(for: annotation.coordinate)
+                    if visibleRect.contains(point) {
+                        // Shift y axis over to match original position
+                        point.y = point.y - ((pin.image?.size.height)! / 2)
+                        pin.image?.draw(at: point)
+                    }
+
+                    let compositeImage = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                    
+                    vc.mapImageView.image = compositeImage
+                } else {
+                    print("Unable to take map screenshot.")
+                }
+            }
         }
     }
 
