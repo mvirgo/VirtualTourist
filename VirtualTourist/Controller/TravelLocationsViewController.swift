@@ -64,7 +64,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     }
     
     @objc func handleLongPress(sender: UILongPressGestureRecognizer) {
-        if sender.state == UIGestureRecognizer.State.ended {
+        if sender.state == UIGestureRecognizer.State.began {
             let clickLocation = sender.location(in: view)
             let coordinateLocation = mapView.convert(clickLocation, toCoordinateFrom: view)
             // Create the annotation
