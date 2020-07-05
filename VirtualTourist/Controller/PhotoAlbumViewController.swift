@@ -9,13 +9,14 @@
 import MapKit
 import UIKit
 
-class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     // MARK: IBOutlets
     @IBOutlet weak var mapImageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var newCollectionButton: UIBarButtonItem!
     @IBOutlet weak var noImagesLabel: UILabel!
+    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
     // MARK: Other Variables
     var dataController: DataController!
@@ -31,6 +32,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         super.viewDidAppear(animated)
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        // Get photos
         if selectedPin.photos?.count == 0 {
             // Get photos at the current location
             getPhotosFromFlickr()
@@ -45,6 +48,29 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
             numberOfPhotos = savedPhotos.count
             collectionView.reloadData()
         } // Else condition means same photos; don't need to reload
+        
+        // Make sure view respects the safe area
+        if #available(iOS 11.0, *) {
+            collectionView?.contentInsetAdjustmentBehavior = .always
+        }
+        // Set the flow layout
+        setFlowLayout()
+    }
+    
+    // Function to handle flow layout
+    func setFlowLayout() {
+        let space: CGFloat = 3.0
+        let divisor: CGFloat = UIDevice.current.orientation.isPortrait ? 3.0 : 6.0
+        let dimension = (view.safeAreaLayoutGuide.layoutFrame.width - (2 * space)) / divisor
+        
+        flowLayout.minimumInteritemSpacing = space
+        flowLayout.minimumLineSpacing = space
+        flowLayout.itemSize = CGSize(width: dimension, height: dimension)
+    }
+    
+    // Handle device rotations to re-calculate flow layout
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+        setFlowLayout()
     }
     
     // MARK: Collection View Functions

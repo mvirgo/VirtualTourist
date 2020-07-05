@@ -84,7 +84,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rX7-ti-3SC">
                                 <rect key="frame" x="0.0" y="238" width="414" height="575"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="x7T-CV-kK3">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KQF-Ei-VmQ">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -130,6 +130,7 @@
                     <navigationItem key="navigationItem" title="Photo Album" id="Nyw-be-L6q"/>
                     <connections>
                         <outlet property="collectionView" destination="rX7-ti-3SC" id="223-cp-NNe"/>
+                        <outlet property="flowLayout" destination="KQF-Ei-VmQ" id="nbP-nZ-YlM"/>
                         <outlet property="mapImageView" destination="ogh-Lg-xUh" id="WoN-Hh-ZWs"/>
                         <outlet property="newCollectionButton" destination="0XE-sE-3Rn" id="PqC-Je-vwn"/>
                         <outlet property="noImagesLabel" destination="qdQ-k0-DFJ" id="dqS-C9-Nkc"/>
