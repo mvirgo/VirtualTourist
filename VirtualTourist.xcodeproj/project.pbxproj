@@ -46,6 +46,7 @@
 		7A9DC98624AEBD7900DCF469 /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
 		7A9FCA882479F38B00BDB1D3 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		7A9FCA8A2479F76D00BDB1D3 /* DataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHelper.swift; sourceTree = "<group>"; };
+		7AA77F6524B1CC9D0024DF55 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +110,7 @@
 				7A87AC722479CC7F0071A2C9 /* View */,
 				7A87AC732479CC830071A2C9 /* Controller */,
 				7A87AC6B2479CC6C0071A2C9 /* Info.plist */,
+				7AA77F6524B1CC9D0024DF55 /* README.md */,
 			);
 			path = VirtualTourist;
 			sourceTree = "<group>";
