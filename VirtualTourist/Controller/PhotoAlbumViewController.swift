@@ -110,21 +110,37 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     func getPhotosFromFlickr() {
         // Disable the New Collection button
         setNewCollectionButtonEnablement(false)
-        // Call the Flickr API
-        APIClient.getPhotosByLocations(latitude: selectedPin.latitude, longitude: selectedPin.longitude, completion: handlePhotoData(response:error:))
+        // Call the Flickr API (use page 1 to find how many pages there are)
+        APIClient.getPhotosByLocations(latitude: selectedPin.latitude, longitude: selectedPin.longitude, page: 1, completion: handlePhotoData(response:error:))
     }
     
     // MARK: Completion Handlers
     func handlePhotoData(response: LocationAlbum?, error: Error?) {
         if let _ = error {
-            let alertVC = UIAlertController(title: "Download Failed", message: "Failed to download location photos.", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.navigationController?.present(alertVC, animated: true, completion: nil)
+            alertFailedDownload()
         } else {
             imagesDownload = response!
             if imagesDownload.photo.count == 0 {
                 noImagesLabel.isHidden = false
+            } else {
+                // Pick a random page
+                let page: Int
+                if imagesDownload.pages > 1 {
+                    page = Int.random(in: 1..<imagesDownload.pages)
+                } else {
+                    page = 1
+                }
+                // Call API again for that page, this time using different completion handler
+                APIClient.getPhotosByLocations(latitude: selectedPin.latitude, longitude: selectedPin.longitude, page: page, completion: handleSpecificPhotoPage(response:error:))
             }
+        }
+    }
+    
+    func handleSpecificPhotoPage(response: LocationAlbum?, error: Error?) {
+        if let _ = error {
+            alertFailedDownload()
+        } else {
+            imagesDownload = response!
             // Load the images themselves
             numberOfPhotos = imagesDownload.photo.count
             for photoData in imagesDownload.photo {
@@ -171,6 +187,12 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         newCollectionButton.isEnabled = enable
     }
     
+    func alertFailedDownload() {
+        let alertVC = UIAlertController(title: "Download Failed", message: "Failed to download location photos.", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.navigationController?.present(alertVC, animated: true, completion: nil)
+    }
+    
     // MARK: IBActions
     @IBAction func newCollectionButtonPressed(_ sender: Any) {
         // Delete the existing photos
@@ -181,7 +203,6 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         savedPhotos.removeAll()
         numberOfPhotos = 0
         collectionView.reloadData()
-        // TODO: Change the below to get new photos instead of the same page
         // Get new photos from the Flickr API
         getPhotosFromFlickr()
     }

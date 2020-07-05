@@ -61,8 +61,8 @@ class APIClient {
     }
     
     // MARK: Specific API requests
-    class func getPhotosByLocations(latitude: Double, longitude: Double, completion: @escaping (LocationAlbum?, Error?) -> Void) {
-        let url = URL(string: "\(Endpoints.base)?method=\(Endpoints.searchPhotosMethod)&api_key=\(Auth.apiKey)&accuracy=11&lat=\(latitude)&lon=\(longitude)&format=json&nojsoncallback=1")
+    class func getPhotosByLocations(latitude: Double, longitude: Double, page: Int, completion: @escaping (LocationAlbum?, Error?) -> Void) {
+        let url = URL(string: "\(Endpoints.base)?method=\(Endpoints.searchPhotosMethod)&api_key=\(Auth.apiKey)&page=\(page)&accuracy=11&lat=\(latitude)&lon=\(longitude)&format=json&nojsoncallback=1")
         taskForGETRequest(url: url!, responseType: PhotoSearchResponse.self) { response, error in
             if let response = response {
                 completion(response.photos, nil)
